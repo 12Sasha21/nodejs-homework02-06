@@ -11,5 +11,5 @@ mongoose
   })
   .catch((error) => {
     console.log(error.message);
-    process.exit(1); // 1 - не оброблена помилка
+    process.exit(1);
   });
