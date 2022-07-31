@@ -4,6 +4,7 @@ const logger = require("morgan");
 
 require("dotenv").config();
 
+const authRouter = require("./routes/api/auth");
 const contactsRouter = require("./routes/api/contacts"); // імпорт групи маршрутів
 
 const app = express(); // створення веб-сервера
@@ -14,6 +15,7 @@ app.use(logger(formatsLogger)); // мідлвар для виводу данни
 app.use(cors());
 app.use(express.json()); // якщо content-type це json, тоді парсить його та зберігаємо в req.body
 
+app.use("/api/users", authRouter);
 app.use("/api/contacts", contactsRouter); // створення групи маршрутів. Будь який запит, що починається з /api/contacts, оброблюється - contactsRouter
 
 app.use((req, res) => {
