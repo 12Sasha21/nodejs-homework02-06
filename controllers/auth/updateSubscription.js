@@ -2,6 +2,7 @@ const { createError } = require("../../helpers");
 const { User, schemas } = require("../../models/user");
 
 const updateSubscription = async (req, res) => {
+  // const { email, subscription } = req.user;
   const { error } = schemas.subscription.validate(req.body);
   if (error) {
     throw createError(400, "missing field subscription");
