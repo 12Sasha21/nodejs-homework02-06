@@ -29,19 +29,21 @@ const userSchema = Schema(
   { versionKey: false, timestamps: true }
 );
 
-const signupSchema = Joi.object({
+const signupAndLoginSchema = Joi.object({
   email: Joi.string().pattern(emailRegexp).required(),
   password: Joi.string().min(6).required(),
 });
 
-const loginSchema = Joi.object({
-  email: Joi.string().pattern(emailRegexp).required(),
-  password: Joi.string().min(6).required(),
+const subscriptionSchema = Joi.object({
+  subscription: Joi.string()
+    .valid(...Object.values(["starter", "pro", "business"]))
+    .required(),
 });
 
 const schemas = {
-  signup: signupSchema,
-  login: loginSchema,
+  signup: signupAndLoginSchema,
+  login: signupAndLoginSchema,
+  subscription: subscriptionSchema,
 };
 
 const User = model("user", userSchema); // отримуємо користувача з бази
