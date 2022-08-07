@@ -1,8 +1,9 @@
 const express = require("express");
 const cors = require("cors");
 const logger = require("morgan");
-
 require("dotenv").config();
+
+global.basedir = __dirname;
 
 const authRouter = require("./routes/api/auth");
 const contactsRouter = require("./routes/api/contacts"); // імпорт групи маршрутів
@@ -14,6 +15,7 @@ const formatsLogger = app.get("env") === "development" ? "dev" : "short"; // я�
 app.use(logger(formatsLogger)); // мідлвар для виводу данних в консоль
 app.use(cors());
 app.use(express.json()); // якщо content-type це json, тоді парсить його та зберігаємо в req.body
+app.use(express.static("public")); // якщо приходить запит за статичним файлом, шукати в public
 
 app.use("/api/users", authRouter);
 app.use("/api/contacts", contactsRouter); // створення групи маршрутів. Будь який запит, що починається з /api/contacts, оброблюється - contactsRouter

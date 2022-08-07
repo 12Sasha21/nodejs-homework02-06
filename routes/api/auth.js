@@ -1,10 +1,12 @@
 const express = require("express");
 
-const { auth } = require("../../middlewares");
+const { basedir } = global;
 
-const ctrl = require("../../controllers/auth");
+const { auth, upload } = require(`${basedir}/middlewares`);
 
-const { ctrlWrapper } = require("../../helpers");
+const ctrl = require(`${basedir}/controllers/auth`);
+
+const { ctrlWrapper } = require(`${basedir}/helpers`);
 
 const router = express.Router();
 
@@ -17,5 +19,12 @@ router.get("/logout", auth, ctrlWrapper(ctrl.logout));
 router.get("/current", auth, ctrlWrapper(ctrl.getCurrent));
 
 router.patch("/", auth, ctrlWrapper(ctrl.updateSubscription));
+
+router.patch(
+  "/avatars",
+  auth,
+  upload.single("avatar"),
+  ctrlWrapper(ctrl.setAvatar)
+);
 
 module.exports = router;
